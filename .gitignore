@@ -21,7 +21,6 @@
 Properties
 *.idea
 *.xml
-*.csproj
 *.config
 *.sln
 *.suo
