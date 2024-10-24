@@ -21,7 +21,6 @@
 Properties
 *.idea
 *.xml
-*.config
 *.sln
 *.suo
 *.user
