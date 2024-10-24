@@ -7,8 +7,7 @@ namespace BookCat.Menu
     {
         protected override FindSup FindImpl(Book item, string par)
         {
-            
-            return item.GetAuthor().Equals(par.ToLowerInvariant().Trim()) ? new FindSup(item) : new FindSup(null);
+            return item.FindAuthor(par) ? new FindSup(item) : new FindSup(null);
         }
     }
 }

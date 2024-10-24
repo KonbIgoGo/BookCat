@@ -27,6 +27,7 @@ namespace BookCat.Storage
         private HashSet<string> _genres = [];
         private HashSet<string> _annotationTokens = [];
         private HashSet<string> _nameTokens = [];
+        private HashSet<string> _authorNameTokens = [];
 
         // necessary to match parameters and constructor names for JSON deserialization
         [JsonConstructor]
@@ -41,6 +42,7 @@ namespace BookCat.Storage
             this._genres = _genres.ToHashSet();
             Tokenizator.Tokenize(_annotationTokens, _annotation);
             Tokenizator.Tokenize(_nameTokens, _title);
+            Tokenizator.Tokenize(_authorNameTokens, _author);
         }
         public Book(string title, int year, string author, string isbn, string annotation, string genres)
         {
@@ -52,6 +54,7 @@ namespace BookCat.Storage
             Tokenizator.Tokenize(_annotationTokens, _annotation);
             Tokenizator.Tokenize(_nameTokens, _title);
             Tokenizator.Tokenize(_genres, genres);
+            Tokenizator.Tokenize(_authorNameTokens, _author);
         }
 
         public string Serialize()
@@ -87,7 +90,22 @@ namespace BookCat.Storage
         {
             return _year;
         }
-        
+
+        public bool FindAuthor(string author)
+        {
+            HashSet<string> name = [];
+            Tokenizator.Tokenize(name, author.ToLowerInvariant());
+
+            foreach (var part in name)
+            {
+                if (!_authorNameTokens.Contains(part))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         public bool FindTitle(string keyword)
         {
             return _nameTokens.Contains(keyword.ToLowerInvariant());
